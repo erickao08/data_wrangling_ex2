@@ -1,6 +1,10 @@
 #read profile
+library(readxl)
 library(dplyr)
-refine<-read.csv('refine_original.csv')
-refine_df<-tbl_df(refine)
-View(refine_df)
-structure(refine_df)
+titanic_original<-read_excel('titanic3.xls')
+titanic<-tbl_df(titanic_original)
+View(titanic)
+structure(titanic)
+
+#emabark missing value
+titanic$embarked[is.na(titanic$embarked)]<-'S'
