@@ -1,0 +1,74 @@
+---
+title: "Data Wrangling Excercise 2"
+author: "Eric"
+date: "April 3, 2017"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load and Read CSV
+
+
+
+```{r cars}
+library(readxl)
+library(dplyr)
+titanic_original<-read_excel('titanic3.xls')
+titanic<-tbl_df(titanic_original)
+
+```
+
+## Check the dataframe
+
+
+
+```{}
+View(titanic)
+
+```
+
+
+## Embark missing value
+
+```{embark missing value}
+#emabark missing value
+
+titanic$embarked[is.na(titanic$embarked)]<-'S'
+```
+
+## Clean up age missing value 
+
+Replace missing value of age with mean.
+It will change the distribution of the population; however it won't change the mean. 
+I think it's okay to use the mean to fill the null unless you're trying to get the mode. 
+
+```{}
+#age missing value
+m<-mean(titanic$age,na.rm=TRUE)
+titanic$age[is.na(titanic$age)]<-m
+```
+
+boat missing value
+
+```{}
+#boat missing value
+titanic$boat[is.na(titanic$boat)]<-'None'
+
+```
+
+cabin missing value
+I do not think it is necessary to fill the empty value here since at the time not everyone on the ship is rich enough to afford a cabin.
+Some might not have a cabin and filling the cabin number with a filled value will twist the fact.
+
+
+Create has_cabin_number
+```{}
+#has_cabin_number 
+titanic$has_cabin_number[is.na(titanic$cabin)]<-0
+titanic$has_cabin_number[!(is.na(titanic$cabin))]<-1
+```
